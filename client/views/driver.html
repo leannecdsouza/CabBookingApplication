@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 purple-back">
+      <form class="form" style="padding:5%">
+        Driver Details:
+        <div class="form-group">
+          <input required class="form-control" ng-model="Driver.Name" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <input required class="form-control" ng-model="Driver.Mobile" placeholder="Mobile">
+        </div>
+        <div class="form-group">
+          <input required class="form-control" ng-model="Driver.Email" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <input required class="form-control" ng-model="Driver.DriverPermit" placeholder="License">
+        </div>
+        <br>Cab Details:
+        <div class="form-group">
+          <select required class="form-control" ng-model="Driver.CabType">
+              <option value="Mini">Mini</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+          <input required class="form-control" ng-model="Driver.CabMake" placeholder="Cab Make">
+        </div>
+        <div class="form-group">
+          <input required class="form-control" ng-model="Driver.CabModel" placeholder="Cab Model">
+        </div>
+        <div class="form-group">
+          <input required class="form-control" ng-model="Driver.CabRegistration" placeholder="Registration Number">
+        </div>
+        <div class="form-group">
+          <input required class="form-control" type="submit" style="background-color:#66014a;border-color:#FFF;color:#FFF;" ng-click="AddDriver()">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8 white-back">
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Cab Type</th>
+          <th>Options</th>
+        </tr>
+        <tr ng-repeat="d in Drivers">
+          <td>{{d.Name}}</td>
+          <td>{{d.Mobile}}</td>
+          <td>{{d.Email}}</td>
+          <td>{{d.CabType}}</td>
+          <td>
+            <div class="btn btn-primary" data-toggle="modal" data-target="#editDriverModal" ng-click="GetDriver(d._id)">
+              <span class="glyphicon glyphicon-pencil"></span>Edit
+            </div>
+            <div class="btn btn-danger" ng-click="RemoveDriver(d._id)">
+              <span class="glyphicon glyphicon-trash"></span>Delete
+            </div>
+          </td>
+        </tr>
+      </table>
+
+
+
+      <div id="editDriverModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Driver Details</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              Driver Details:
+              <div class="form-group">
+                <input required class="form-control" ng-model="EditDriver.Name" placeholder="Name">
+              </div>
+              <div class="form-group">
+                <input required class="form-control" ng-model="EditDriver.Mobile" placeholder="Mobile">
+              </div>
+              <div class="form-group">
+                <input required class="form-control" ng-model="EditDriver.Email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <input required class="form-control" ng-model="EditDriver.DriverPermit" placeholder="License">
+              </div>
+              <div class="form-group">
+                <select required class="form-control" ng-model="EditDriver.CabType">
+                      <option value="Mini">Mini</option>
+                      <option value="Hatchback">Hatchback</option>
+                      <option value="Sedan">Sedan</option>
+                      <option value="SUV">SUV</option>
+                    </select>
+              </div>
+            </div>
+
+            <!-- <div class="col-md-12">
+                Cab Details:
+                <div class="form-group">
+                  <select required class="form-control" ng-model="EditDriver.CabType">
+                        <option value="Mini">Mini</option>
+                        <option value="Hatchback">Hatchback</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                      </select>
+                </div>
+
+                <div class="form-group">
+                  <input required class="form-control" ng-model="EditDriver.CabMake" placeholder="Cab Make">
+                </div>
+                <div class="form-group">
+                  <input required class="form-control" ng-model="EditDriver.CabModel" placeholder="Cab Model">
+                </div>
+                <div class="form-group">
+                  <input required class="form-control" ng-model="EditDriver.CabRegistration" placeholder="Registration Number">
+                </div>
+              </div> -->
+
+            <div class="form-group col-md-12" data-dismiss="modal">
+              <input required class="form-control" type="submit" value="Save Changes" style="background-color:#66014a;border-color:#FFF;color:#FFF;" ng-click="SaveChanges()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

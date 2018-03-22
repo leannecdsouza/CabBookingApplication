@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css?family=Mina');
+body {
+  background-color: #eee;
+  color: #000;
+  font-family: 'Mina', sans-serif;
+}
+
+img {
+  width: 100%;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 1);
+}
+
+.btn-warning {
+  background-color: #930068;
+  border-color: #930068;
+  color: #fff;
+  outline: #930068;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 2px 0 0 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  margin: 10px 0;
+  -moz-box-sizing: border-box;
+  outline: none;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.f-list {
+  display: inline-block;
+  line-height: 2em;
+  list-style-type: none;
+}
+
+.vehi-ops {
+  filter: grayscale(80%);
+  width: 100%;
+}
+
+.vehi-ops:hover {
+  filter: grayscale(0%);
+}
+
+.white-back {
+  background-color: #fff;
+  color: #000;
+}
+
+.purple-back {
+  background-color: #930068;
+  color: #fff;
+}
+
+#map {
+  height: 376px;
+  width: 100%;
+}
+
+/* ------------------ */
+
+label>input { /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute;   /* Remove input from document flow */
+  display: inline-block;
+}
+
+label>input+img {
+  cursor: pointer;
+  border: 2px solid transparent;
+  display: inline-block;
+}
+
+label>input:checked+img {
+  /* (RADIO CHECKED) IMAGE STYLES */
+  filter: grayscale(0%);
+  display: inline-block;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "bookmycab",
+  "version": "1.0.0",
+  "description": "Book a cab online",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leanne Dsouza",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.2.0",
+    "mongoose": "^5.0.7",
+    "morgan": "^1.9.0",
+    "socket.io": "^2.0.4"
+  }
+}

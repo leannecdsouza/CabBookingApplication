@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-6 white-back" style="height:424px;">
+      <br>
+
+      <!-- Pick-up and drop-off location -->
+      <div class="form-group col-md-12 part1">
+        <input id="pickup" required class="form-control" ng-model="Travel.PickUp" placeholder="Pickup Point">
+      </div>
+      <div class="form-group col-md-12 part1" id="locationField">
+        <input id="dropoff" required class="form-control" ng-model="Travel.DropOff" placeholder="Dropoff Point" />
+      </div><br>
+
+      <!-- Choose Cab Type -->
+      <div class="form-group col-md-12 text-center part1">
+        Choose your ride: <br><br>
+        <label class="col-md-3">
+            <input type="radio" name="small" value="Mini" ng-model="Travel.CarType" />
+            <img src="./public/images/car1.png" class="vehi-ops">
+            Mini
+          </label>
+        <label class="col-md-3">
+            <input type="radio" name="small" value="Hatchback" ng-model="Travel.CarType" />
+            <img src="./public/images/car2.png" class="vehi-ops">
+            Hatchback
+          </label>
+        <label class="col-md-3">
+            <input type="radio" name="small" value="car3" ng-model="Travel.CarType" />
+            <img src="./public/images/car3.png" class="vehi-ops">
+            Sedan
+          </label>
+        <label class="col-md-3">
+            <input type="radio" name="small" value="car4" ng-model="Travel.CarType" />
+            <img src="./public/images/car4.png" class="vehi-ops">
+            SUV
+          </label>
+      </div>
+
+      <!-- Calculate Fare -->
+      <div class="form-group col-md-12 part1">
+        <input type="submit" class="btn btn-warning" style="width:100%" value="Calculate" ng-click="calculateDistance()" />
+      </div>
+
+      <div class="panel panel-default part2 col-md-11" style="margin-top:-40px; padding:0 3% ;">
+        <br>
+        <w style="color:#930068;">Journey Details:</w>
+        <hr>
+
+        <div class="col-md-6">
+          <b style="color:#930068;line-height:1.8em;">Pick-up Point:</b>
+          <br> {{Booking.Pickup}} <br><br>
+          <b style="color:#930068">Distance:</b> {{Booking.Distance}}
+          <br>
+        </div>
+
+        <div class="col-md-6">
+          <b style="color:#930068;line-height:1.8em;">Drop-off Point:</b>
+          <br> {{Booking.Dropoff}} <br><br>
+          <b style="color:#930068">Estimated Duration:</b> {{Booking.Duration}}
+
+        </div>
+        <br>
+        <div class="col-md-12">
+          <hr>
+          <h4><b style="color:#930068">Fare: </b>&#8377;{{Booking.Fare}} </h4><br>
+        </div>
+      </div>
+
+      <br>
+      <div class="form-group col-md-6 part2 btns2">
+        <input type="submit" class="btn btn-warning" style="width:100%" value="Ride Now!" ng-click="travelNow()" />
+      </div>
+      <div class="form-group col-md-6 part2 btns2">
+        <input type="submit" class="btn btn-default" style="width:100%" value="Travel Later" ng-click="travelLaterOps()" />
+      </div>
+
+      <div class="form-group col-md-6 part3">
+        <input type="date" class="form-control" ng-model="Booking.Date" />
+      </div>
+      <div class="form-group col-md-5 part3">
+        <input type="time" class="form-control" ng-model="Booking.Time" />
+      </div>
+
+      <div class="form-group col-md-12 part3">
+        <input type="submit" class="btn btn-warning" style="width:100%" value="Save" ng-click="travelLater()" />
+      </div>
+
+    </div>
+    <div class="col-md-6 purple-back" style="padding:2%;">
+      <div id="map" ng-init="initMap()"></div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row">
+    <div class="btn btn-warning pull-right" data-toggle="modal" data-target="#newTariffModal"> + Add Tariff Plan </div>
+    <h2>Tariffs</h2>
+
+
+    <!-- Modal -->
+    <div id="newTariffModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">New Tariff Plan</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form class="form">
+              <div class="form-group col-md-12">
+                <select required class="form-control" ng-model="Tariff.Cab">
+                <option value="Mini">Mini</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+              </select>
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="number" class="form-control" ng-model="Tariff.NormalRate" placeholder="Normal Rate">
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="number" class="form-control" ng-model="Tariff.PeakRate" placeholder="Peak Rate">
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="time" class="form-control" ng-model="Tariff.StartPeak" placeholder="Start Peak Time">
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="time" class="form-control" ng-model="Tariff.EndPeak" placeholder="End Peak Time">
+              </div>
+              <div class="form-group col-md-12">
+                <button type="button" class="btn btn-warning" ng-click="AddTariff()" data-dismiss="modal">Save Tariff Plan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <table class="table table-striped card text-center" style="border-collapse: collapse; width:100%;">
+      <tr>
+        <th class="text-center">Cab</th>
+        <th class="text-center">Normal Rate</th>
+        <th class="text-center">Peak Rate</th>
+        <th class="text-center">Start Peak Time</th>
+        <th class="text-center">End Peak Time</th>
+        <th class="text-center">Options</th>
+      </tr>
+      <tr ng-repeat="t in Tariffs">
+        <td>{{t.Cab}}</td>
+        <td>&#8377;{{t.NormalRate}}</td>
+        <td>&#8377;{{t.PeakRate}}</td>
+        <td>{{t.StartPeak}}</td>
+        <td>{{t.EndPeak}}</td>
+        <td>
+          <div class="btn btn-primary" data-toggle="modal" data-target="#editTariffModal" ng-click="GetTariff(t._id)">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </div>
+          <div class="btn btn-danger" ng-click="RemoveTariff(t._id)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div id="editTariffModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">New Tariff Plan</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form class="form">
+              <div class="form-group col-md-12">
+                <select required class="form-control" ng-model="EditTariff.Cab">
+                <option value="Mini">Mini</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+              </select>
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="number" class="form-control" ng-model="EditTariff.NormalRate" placeholder="Normal Rate">
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="number" class="form-control" ng-model="EditTariff.PeakRate" placeholder="Peak Rate">
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="time" class="form-control" ng-model="EditTariff.StartPeak" placeholder="Start Peak Time">
+              </div>
+              <div class="form-group col-md-12">
+                <input required type="time" class="form-control" ng-model="EditTariff.EndPeak" placeholder="End Peak Time">
+              </div>
+              <div class="form-group col-md-12">
+                <button type="button" class="btn btn-warning" ng-click="SaveChanges()" data-dismiss="modal">Save Tariff Plan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
