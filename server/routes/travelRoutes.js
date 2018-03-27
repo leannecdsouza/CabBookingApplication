@@ -31,24 +31,27 @@ router.get('/gettravels', function(req, res) {
 // Add new travel plan
 router.post('/addtravel', function(req, res) {
   var newTravel = new travel();
-  newTravel.CustomerName = req.body.CustomerName;
-  newTravel.CustomerMobile = req.body.CustomerMobile;
-  newTravel.CustomerEmail = req.body.CustomerEmail;
+  // newTravel.CustomerName = req.body.CustomerName;
+  // newTravel.CustomerMobile = req.body.CustomerMobile;
+  // newTravel.CustomerEmail = req.body.CustomerEmail;
+  console.log("Reached here");
   newTravel.Booking = req.body.Booking;
   newTravel.Cab = req.body.Cab;
   newTravel.StartPoint = req.body.Pickup;
   newTravel.EndPoint = req.body.Dropoff;
-  newTravel.TravelDate = req.body.TravelDate;
-  newTravel.TravelTime = req.body.TravelTime;
+  newTravel.TravelDate = req.body.Date;
+  newTravel.TravelTime = req.body.Time;
   newTravel.Distance = req.body.Distance;
-  newTravel.Total = req.body.Total;
+  newTravel.Total = req.body.Fare;
   newTravel.save(function(err, doc) {
     if (err) {
       throw err;
+      console.log("Error" + err);
     } else {
+      console.log("Else block");
       res.json({
         success: true,
-        message: 'New Travel Booking Saved'
+        message: 'New Booking Saved'
       });
     }
   });

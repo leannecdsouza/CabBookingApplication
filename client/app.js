@@ -32,6 +32,17 @@ app.config(function($routeProvider, $locationProvider) {
   });
 });
 
+
+// var clients = 0;
+//
+// io.on('connect', function(socket) {
+//   // sending to all clients except sender
+//   socket.broadcast.emit('broadcast', 'hello friends!');
+// });
+
+
+
+
 app.run(function($rootScope, $http, $location, $sessionStorage, $cookies) {
   if ($sessionStorage.tokenDetails) {
     $http.defaults.headers.common.Authorization = $sessionStorage.tokenDetails.token;
@@ -40,25 +51,35 @@ app.run(function($rootScope, $http, $location, $sessionStorage, $cookies) {
   //Redirect to login page if not logged in and trying to access restricted page
   $rootScope.$on('$locationChangeStart', function(event, next, current) {
     var publicPages = ['/', '/login', '/register'];
-    var AdminPages = ['/tariff', '/add_driver'];
-    var CustomerPages = ['/booking', '/myrides'];
-    var DriverPages = ['/driver'];
 
     var authUser = $cookies.getObject('authUser');
+    console.log(authUser);
     if (authUser != undefined) {
       var UserLoggedIn = authUser.userDetails;
+    }
 
-      if (UserLoggedIn.Role == 'Admin') {
-        // $location.path('/add_driver');
-      }
-      if (UserLoggedIn.Role == 'Customer') {
-        // $location.path('/booking');
-      }
-      if (UserLoggedIn.Role == 'Driver') {
-        // $location.path('/driver');
-      }
+
+    //----------------------------------------
+
+
+    var restrictedPage = publicPages.indexOf($location.path()) === -1;
+    if (restrictedPage && !$sessionStorage.tokenDetails && $location.path() == '') {
+      $location.path('/');
     } else {
-      $location.path('/login');
+      if (restrictedPage && UserLoggedIn.Role != 'Admin' && $location.path() == '/tariff') {
+        $location.path('/unauthorised');
+      }
+      if (restrictedPage && UserLoggedIn.Role != 'Admin' && $location.path() == '/add_driver') {
+        $location.path('/unauthorised');
+      }
+
+      // if (restrictedPage && UserLoggedIn.Role != 'Customer' && $location.path() == ) {
+      //   $location.path('/booking');
+      // }
+      // if (restrictedPage && UserLoggedIn.Role != 'Driver' && $location.path() == ) {
+      //   $location.path('/driver');
+      // }
+
     }
   });
 });

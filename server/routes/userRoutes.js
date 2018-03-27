@@ -54,8 +54,9 @@ router.post('/login', function(req, res) {
         isLoggedIn: true,
         userDetails: user
       });
-      console.log(token);
+      // console.log(token);
       console.log("Logged In Successfully");
+      console.log(token);
     }
   });
 });

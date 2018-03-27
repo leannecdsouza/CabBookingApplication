@@ -45,7 +45,8 @@ angular.module('myApp').controller('BookingController', function($scope, $http) 
     var marker = new google.maps.Marker({
       position: uluru,
       draggable: true,
-      map: map
+      map: map,
+      icon: '/public/images/person.png'
     });
 
     var latlng = uluru;
@@ -166,23 +167,28 @@ angular.module('myApp').controller('BookingController', function($scope, $http) 
   $scope.travelLaterOps = function() {
     $(".btns2").hide();
     $(".part3").show();
-    var d = new Date();
-    var d = new Date("2015-03-25");
+    var today = new Date();
+    var tomorrow = new Date();
+    var dayafter = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    dayafter.setDate(tomorrow.getDate() + 1);
+    today = today.toString().substring(0, 3) + ' - ' +today.toString().substring(4, 10) + ', ' + today.toString().substring(11, 15);
+    tomorrow = tomorrow.toString().substring(0, 3) + ' - ' +tomorrow.toString().substring(4, 10) + ', ' + tomorrow.toString().substring(11, 15);
+    dayafter = dayafter.toString().substring(0, 3) + ' - ' +dayafter.toString().substring(4, 10) + ', ' + dayafter.toString().substring(11, 15);
+    $scope.ops = [today, tomorrow, dayafter];
+
   }
 
   $scope.travelLater = function() {
-    var date = $scope.Booking.Date + "";
-    $scope.Booking.Date = date.substring(0, 21);
 
-    var time = $scope.Booking.Time + "";
-    $scope.Booking.Time = time.substring(16, 21);
+    var time = $scope.Booking.Time.toString();
+    $scope.Booking.Time = time.substring(15, 21);
 
     $scope.Journey = $scope.Booking;
     $scope.Journey.Booking = "Later"
+    $scope.Journey.Cab = $scope.Travel.CarType;
     console.log($scope.Journey);
     $http.post('/addtravel', $scope.Journey).then(function(response) {});
-    $scope.AddTravel();
-
   }
 
 

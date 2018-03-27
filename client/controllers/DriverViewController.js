@@ -1,6 +1,11 @@
 angular.module('myApp').controller('DriverViewController', function($scope, $http) {
 
-  $scope.initMap = function() {
+  var socket = io();
+  $(document).ready(function(){
+    
+  }
+
+  $scope.initMapD = function() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -20,8 +25,10 @@ angular.module('myApp').controller('DriverViewController', function($scope, $htt
     var marker = new google.maps.Marker({
       position: uluru,
       draggable: true,
-      map: map
+      map: map,
+      icon: '/public/images/car-icon.png'
     });
+
   }
 
 });
