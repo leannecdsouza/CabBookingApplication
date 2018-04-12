@@ -14,13 +14,15 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a class="nav-item nav-link" href="#/booking"> Bookings </a></li>
-        <li><a class="nav-item nav-link" href="#/tariff"> Tariffs </a></li>
-        <li><a class="nav-item nav-link" href="#/driver"> Drivers </a></li>
+        <li ng-show="checkCustomer()"><a class="nav-item nav-link" href="#/booking"> Bookings </a></li>
+        <li ng-show="checkAdmin()"><a class="nav-item nav-link" href="#/tariff"> Tariffs </a></li>
+        <li ng-show="checkAdmin()"><a class="nav-item nav-link" href="#/driver"> Drivers </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a ng-hide="checkL()" href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a ng-hide="checkL()" href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a ng-show="checkL()" href="#/">Hi {{$authUser.Name}}</a></li>
+        <!-- <li><a ng-show="checkL()" href="#/">Log Out</a></li> -->
       </ul>
     </div>
   </div>

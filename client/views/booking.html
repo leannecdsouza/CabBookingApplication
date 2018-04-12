@@ -94,5 +94,29 @@
       <div id="map" ng-init="initMap()"></div>
     </div>
 
+
+<div id='clickNewDriver' data-toggle="modal" data-target="#newDriverBooked"></div>
+
+    <div id="newDriverBooked" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Driver</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <br>Pickup Point: {{Booking.Pickup}}
+            <br>Dropoff Point: {{Booking.Dropoff}}
+            <br>
+            <br>Driver Name: {{DriverInfo.Name}}
+            <br>Driver Number: {{DriverInfo.Mobile}}
+            <hr>Total Fare: {{Booking.Fare}}
+            <input type="submit" class="btn btn-warning" style="width:100%" value="Okay" ng-click="rideNow()" data-dismiss="modal"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

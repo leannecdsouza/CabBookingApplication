@@ -53,7 +53,6 @@ app.run(function($rootScope, $http, $location, $sessionStorage, $cookies) {
     var publicPages = ['/', '/login', '/register'];
 
     var authUser = $cookies.getObject('authUser');
-    console.log(authUser);
     if (authUser != undefined) {
       var UserLoggedIn = authUser.userDetails;
     }
@@ -72,14 +71,12 @@ app.run(function($rootScope, $http, $location, $sessionStorage, $cookies) {
       if (restrictedPage && UserLoggedIn.Role != 'Admin' && $location.path() == '/add_driver') {
         $location.path('/unauthorised');
       }
-
-      // if (restrictedPage && UserLoggedIn.Role != 'Customer' && $location.path() == ) {
-      //   $location.path('/booking');
-      // }
-      // if (restrictedPage && UserLoggedIn.Role != 'Driver' && $location.path() == ) {
-      //   $location.path('/driver');
-      // }
-
+      if (restrictedPage && UserLoggedIn.Role != 'Customer' && $location.path() == '/booking') {
+        $location.path('/unauthorised');
+      }
+      if (restrictedPage && UserLoggedIn.Role != 'Driver' && $location.path() == '/driver') {
+        $location.path('/unauthorised');
+      }
     }
   });
 });

@@ -16,7 +16,7 @@
           </div>
           <div class="modal-body">
             <form class="form">
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <select required class="form-control" ng-model="Tariff.Cab">
                 <option value="Mini">Mini</option>
                 <option value="Hatchback">Hatchback</option>
@@ -24,19 +24,19 @@
                 <option value="SUV">SUV</option>
               </select>
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <input required type="number" class="form-control" ng-model="Tariff.NormalRate" placeholder="Normal Rate">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <input required type="number" class="form-control" ng-model="Tariff.PeakRate" placeholder="Peak Rate">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <input required type="time" class="form-control" ng-model="Tariff.StartPeak" placeholder="Start Peak Time">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <input required type="time" class="form-control" ng-model="Tariff.EndPeak" placeholder="End Peak Time">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <button type="button" class="btn btn-warning" ng-click="AddTariff()" data-dismiss="modal">Save Tariff Plan</button>
               </div>
             </form>
@@ -83,7 +83,7 @@
           </div>
           <div class="modal-body">
             <form class="form">
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <select required class="form-control" ng-model="EditTariff.Cab">
                 <option value="Mini">Mini</option>
                 <option value="Hatchback">Hatchback</option>
@@ -91,19 +91,19 @@
                 <option value="SUV">SUV</option>
               </select>
               </div>
-              <div class="form-group col-md-12">
-                <input required type="number" class="form-control" ng-model="EditTariff.NormalRate" placeholder="Normal Rate">
+              <div class="form-group">
+                <input required class="form-control" ng-model="EditTariff.NormalRate" placeholder="Normal Rate">
               </div>
-              <div class="form-group col-md-12">
-                <input required type="number" class="form-control" ng-model="EditTariff.PeakRate" placeholder="Peak Rate">
+              <div class="form-group">
+                <input required class="form-control" ng-model="EditTariff.PeakRate" placeholder="Peak Rate">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <input required type="time" class="form-control" ng-model="EditTariff.StartPeak" placeholder="Start Peak Time">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <input required type="time" class="form-control" ng-model="EditTariff.EndPeak" placeholder="End Peak Time">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <button type="button" class="btn btn-warning" ng-click="SaveChanges()" data-dismiss="modal">Save Tariff Plan</button>
               </div>
             </form>

@@ -1,11 +1,29 @@
-angular.module('myApp').controller('BookingController', function($scope, $http) {
-  $scope.Booking = [];
+angular.module('myApp').controller('BookingController', function($scope, $cookies, $http) {
+  var socket = io();
+
+
+
+  $scope.Booking = {
+    Pickup: '',
+    Dropoff: '',
+    Distance: '',
+    Duration: '',
+    Time: '',
+    BookingType: '',
+    Cab: ''
+  };
   var directionsService;
   var directionsDisplay;
 
   $(document).ready(function() {
     $(".part2").hide();
     $(".part3").hide();
+
+    $scope.authUser = $cookies.getObject('authUser');
+    $scope.authUser = $scope.authUser.userDetails;
+    // console.log($scope.authUser);
+
+    $scope.checkL = sessionStorage.getItem('checkL');
   });
 
   $scope.initMap = function() {
@@ -80,6 +98,25 @@ angular.module('myApp').controller('BookingController', function($scope, $http) 
         }
       });
     });
+
+
+    socket.on('NewMessage', function(data) {
+      console.log(data.message);
+      if (data.message) {
+        $scope.DriverInfo = data.message.driverlocation;
+        var DriverLoc = $scope.DriverInfo.Location;
+        console.log(DriverLoc);
+
+        var Mymarker = new google.maps.Marker({
+          position: DriverLoc,
+          map: map,
+          icon: '/public/images/car-icon.png'
+        });
+      } else {
+        console.log('Error getting driver info');
+      }
+    });
+
   }
 
   // See route
@@ -116,6 +153,7 @@ angular.module('myApp').controller('BookingController', function($scope, $http) 
   function computeTotalDistance() {
     $scope.Booking.Pickup = document.getElementById('pickup').value;
     $scope.Booking.Dropoff = document.getElementById('dropoff').value;
+
     var newdistance = 0;
 
     //Distance and Duration
@@ -149,13 +187,27 @@ angular.module('myApp').controller('BookingController', function($scope, $http) 
 
         $scope.Booking.Distance = distance;
         $scope.Booking.Duration = duration;
-        // document.getElementById("Distance").innerHTML = distance;
-        // document.getElementById("Duration").innerHTML = duration;
 
         var cabType = $scope.Travel.CarType;
         $http.get('/findtariff/cabrates/' + cabType).then(function(response) {
           $scope.Tariffs = response.data[0];
-          $scope.Booking.Fare = newdistance * $scope.Tariffs.NormalRate;
+
+          var currTime = Date();
+          currTime = currTime.toString();
+          currTime = currTime.substring(15, 18);
+
+          console.log(currTime);
+
+          var sPeak = $scope.Tariffs.StartPeak.toString().substring(0, 3);
+          var ePeak = $scope.Tariffs.EndPeak.toString().substring(0, 3);
+
+          if (currTime >= sPeak && currTime <= ePeak) {
+            $scope.Booking.Fare = newdistance * $scope.Tariffs.PeakRate;
+            console.log('PeakRate' + sPeak + ' ' + ePeak + ' ' + $scope.Tariffs.NormalRate);
+          } else {
+            $scope.Booking.Fare = newdistance * $scope.Tariffs.NormalRate;
+            console.log('NormalRate' + sPeak + ' ' + ePeak + ' ' + $scope.Tariffs.NormalRate);
+          }
         });
 
       } else {
@@ -172,23 +224,56 @@ angular.module('myApp').controller('BookingController', function($scope, $http) 
     var dayafter = new Date();
     tomorrow.setDate(today.getDate() + 1);
     dayafter.setDate(tomorrow.getDate() + 1);
-    today = today.toString().substring(0, 3) + ' - ' +today.toString().substring(4, 10) + ', ' + today.toString().substring(11, 15);
-    tomorrow = tomorrow.toString().substring(0, 3) + ' - ' +tomorrow.toString().substring(4, 10) + ', ' + tomorrow.toString().substring(11, 15);
-    dayafter = dayafter.toString().substring(0, 3) + ' - ' +dayafter.toString().substring(4, 10) + ', ' + dayafter.toString().substring(11, 15);
+    today = today.toString().substring(0, 3) + ' - ' + today.toString().substring(4, 10) + ', ' + today.toString().substring(11, 15);
+    tomorrow = tomorrow.toString().substring(0, 3) + ' - ' + tomorrow.toString().substring(4, 10) + ', ' + tomorrow.toString().substring(11, 15);
+    dayafter = dayafter.toString().substring(0, 3) + ' - ' + dayafter.toString().substring(4, 10) + ', ' + dayafter.toString().substring(11, 15);
     $scope.ops = [today, tomorrow, dayafter];
 
   }
 
   $scope.travelLater = function() {
-
     var time = $scope.Booking.Time.toString();
     $scope.Booking.Time = time.substring(15, 21);
+    $scope.Booking.BookingType = "Later"
+    $scope.Booking.Cab = $scope.Travel.CarType;
+    $scope.saveBooking($scope.Booking);
+  }
 
-    $scope.Journey = $scope.Booking;
-    $scope.Journey.Booking = "Later"
-    $scope.Journey.Cab = $scope.Travel.CarType;
-    console.log($scope.Journey);
-    $http.post('/addtravel', $scope.Journey).then(function(response) {});
+  $scope.rideNow = function() {
+    var n = new Date().getTime();
+    var d = new Date(n);
+    $scope.Booking.Time = d.toString().substring(15, 21);
+    $scope.Booking.Date = d.toString().substring(3, 15);
+    console.log($scope.Booking.Time);
+    $scope.Booking.BookingType = "Now"
+    $scope.Booking.Cab = $scope.Travel.CarType;
+    $scope.saveBooking($scope.Booking);
+  }
+
+  $scope.saveBooking = function(Booking) {
+    $http.post('/addtravel', Booking).then(function(response) {});
+  }
+
+
+  $scope.travelNow = function() {
+    var time = $scope.Booking.Time.toString();
+    $scope.Booking.Time = time.substring(15, 21);
+    $scope.Booking.BookingType = "Now"
+    $scope.Booking.Cab = $scope.Travel.CarType;
+
+    $scope.BookNow = {
+      Pickup: $scope.Booking.Pickup,
+      Dropoff: $scope.Booking.Dropoff,
+      CustName: $scope.authUser.Name,
+      CustNumber: $scope.authUser.Mobile,
+      Fare: $scope.Booking.Fare
+    };
+
+    socket.emit('BookDetail', {
+      All: $scope.BookNow
+    });
+
+    document.getElementById('clickNewDriver').click();
   }
 
 
@@ -200,4 +285,14 @@ angular.module('myApp').controller('BookingController', function($scope, $http) 
       document.getElementById('dropoff').placeholder = 'Enter a city';
     }
   }
+
+
+  //------------------------------------------------------------
+
+  var socket = io.connect();
+  socket = io.connect('http://localhost:3000', {
+    reconnect: false
+  });
+
+
 });

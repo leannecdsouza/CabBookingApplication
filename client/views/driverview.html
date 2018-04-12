@@ -4,9 +4,31 @@
       <div id="map" ng-init="initMapD()"></div>
     </div>
     <div class="col-md-6 white-back" style="padding:2%;">
-      Test text test text test text test text test text test text test text
-      test text test text test text test text test text test text test text
-      test text test text test text test text test text test text test text
+      Test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text
+    </div>
+
+    <div id='clickNewBooking' data-toggle="modal" data-target="#newBookingModal"></div>
+
+    <div id="newBookingModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">New Booking</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <br>Pickup Point:  {{$BookingDeets.Pickup}}
+            <br>Dropoff Point: {{$BookingDeets.Dropoff}}
+            <br>
+            <br>Customer Name: {{$BookingDeets.CustName}}
+            <br>Customer Number: {{$BookingDeets.CustNumber}}
+            <hr>Total Fare: {{$BookingDeets.Fare}}
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
