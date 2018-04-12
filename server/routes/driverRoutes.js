@@ -39,6 +39,20 @@ router.get('/finddriver/:id', function(req, res) {
   });
 });
 
+// Find a Driver by email
+router.get('/finddriver/email/:email', function(req, res) {
+  driver.find({
+    Email: req.params.email
+  }, function(err, data) {
+    if (err) {
+      throw err;
+    } else {
+      console.log(data);
+      res.json(data);
+    }
+  });
+});
+
 // Deleting Driver
 router.delete('/deletedriver/:id', function(req, res) {
   driver.findOneAndRemove({
