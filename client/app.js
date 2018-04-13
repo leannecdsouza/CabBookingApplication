@@ -33,16 +33,6 @@ app.config(function($routeProvider, $locationProvider) {
 });
 
 
-// var clients = 0;
-//
-// io.on('connect', function(socket) {
-//   // sending to all clients except sender
-//   socket.broadcast.emit('broadcast', 'hello friends!');
-// });
-
-
-
-
 app.run(function($rootScope, $http, $location, $sessionStorage, $cookies) {
   if ($sessionStorage.tokenDetails) {
     $http.defaults.headers.common.Authorization = $sessionStorage.tokenDetails.token;

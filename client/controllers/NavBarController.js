@@ -1,9 +1,9 @@
-angular.module('myApp').controller('NavBarController', function($scope, $cookies, $http) {
-
-  $scope.authUser = $cookies.getObject('authUser');
+angular.module('myApp').controller('NavBarController', function($scope, $http, $cookies, AuthenticationService) {
 
   $scope.checkL = function() {
-    if ($scope.authUser) {
+    if ($cookies.getObject('authUser')) {
+      $scope.authUser = $cookies.getObject('authUser');
+      $scope.authUser = $scope.authUser.userDetails;
       return true;
     } else {
       return false;
@@ -11,6 +11,7 @@ angular.module('myApp').controller('NavBarController', function($scope, $cookies
   }
 
   $scope.checkAdmin = function() {
+    $scope.authUser = $cookies.getObject('authUser');
     if ($scope.authUser && $scope.authUser.userDetails.Role == 'Admin') {
       return true;
     } else {
@@ -19,6 +20,7 @@ angular.module('myApp').controller('NavBarController', function($scope, $cookies
   }
 
   $scope.checkDriver = function() {
+    $scope.authUser = $cookies.getObject('authUser');
     if ($scope.authUser && $scope.authUser.userDetails.Role == 'Driver') {
       return true;
     } else {
@@ -27,11 +29,11 @@ angular.module('myApp').controller('NavBarController', function($scope, $cookies
   }
 
   $scope.checkCustomer = function() {
+    $scope.authUser = $cookies.getObject('authUser');
     if ($scope.authUser && $scope.authUser.userDetails.Role == 'Customer') {
       return true;
     } else {
       return false;
     }
   }
-  // console.log($scope.authUser);
 });

@@ -232,6 +232,8 @@ angular.module('myApp').controller('BookingController', function($scope, $cookie
   }
 
   $scope.travelLater = function() {
+    $scope.Booking.CustomerName = $scope.authUser.Name;
+    $scope.Booking.CustomerMobile = $scope.authUser.Mobile;
     var time = $scope.Booking.Time.toString();
     $scope.Booking.Time = time.substring(15, 21);
     $scope.Booking.BookingType = "Later"
@@ -240,6 +242,8 @@ angular.module('myApp').controller('BookingController', function($scope, $cookie
   }
 
   $scope.rideNow = function() {
+    $scope.Booking.CustomerName = $scope.authUser.Name;
+    $scope.Booking.CustomerMobile = $scope.authUser.Mobile;
     var n = new Date().getTime();
     var d = new Date(n);
     $scope.Booking.Time = d.toString().substring(15, 21);
@@ -251,29 +255,34 @@ angular.module('myApp').controller('BookingController', function($scope, $cookie
   }
 
   $scope.saveBooking = function(Booking) {
+    console.log(Booking);
     $http.post('/addtravel', Booking).then(function(response) {});
   }
 
 
   $scope.travelNow = function() {
-    var time = $scope.Booking.Time.toString();
-    $scope.Booking.Time = time.substring(15, 21);
-    $scope.Booking.BookingType = "Now"
-    $scope.Booking.Cab = $scope.Travel.CarType;
+    if ($scope.Travel.CarType == $scope.DriverInfo.CabType) {
+      var time = $scope.Booking.Time.toString();
+      $scope.Booking.Time = time.substring(15, 21);
+      $scope.Booking.BookingType = "Now"
+      $scope.Booking.Cab = $scope.Travel.CarType;
 
-    $scope.BookNow = {
-      Pickup: $scope.Booking.Pickup,
-      Dropoff: $scope.Booking.Dropoff,
-      CustName: $scope.authUser.Name,
-      CustNumber: $scope.authUser.Mobile,
-      Fare: $scope.Booking.Fare
-    };
+      $scope.BookNow = {
+        Pickup: $scope.Booking.Pickup,
+        Dropoff: $scope.Booking.Dropoff,
+        CustName: $scope.authUser.Name,
+        CustNumber: $scope.authUser.Mobile,
+        Fare: $scope.Booking.Fare
+      };
 
-    socket.emit('BookDetail', {
-      All: $scope.BookNow
-    });
+      socket.emit('BookDetail', {
+        All: $scope.BookNow
+      });
 
-    document.getElementById('clickNewDriver').click();
+      document.getElementById('clickNewDriver').click();
+    } else {
+      alert("No Cabs Available");
+    }
   }
 
 

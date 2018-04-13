@@ -1,4 +1,4 @@
-angular.module('myApp').service('AuthenticationService', function($http) {
+angular.module('myApp').service('AuthenticationService', function($http, $sessionStorage, $cookies) {
   this.Login = function(user, callback) {
     $http.post('/login', user).then(function(response) {
       if (response.data.success && response.data.token) {
@@ -29,4 +29,11 @@ angular.module('myApp').service('AuthenticationService', function($http) {
       }
     });
   }
+
+  this.Logout = function() {
+        delete $sessionStorage.tokenDetails;
+        $http.defaults.headers.common.Authorization = '';
+        sessionStorage.clear();
+        $cookies.remove('authUser');
+    }
 });

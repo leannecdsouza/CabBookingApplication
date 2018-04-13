@@ -16,13 +16,12 @@
         <li class="active"><a href="#">Home</a></li>
         <li ng-show="checkCustomer()"><a class="nav-item nav-link" href="#/booking"> Bookings </a></li>
         <li ng-show="checkAdmin()"><a class="nav-item nav-link" href="#/tariff"> Tariffs </a></li>
-        <li ng-show="checkAdmin()"><a class="nav-item nav-link" href="#/driver"> Drivers </a></li>
+        <li ng-show="checkAdmin()"><a class="nav-item nav-link" href="#/add_driver"> Drivers </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a ng-hide="checkL()" href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         <li><a ng-hide="checkL()" href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        <li><a ng-show="checkL()" href="#/">Hi {{$authUser.Name}}</a></li>
-        <!-- <li><a ng-show="checkL()" href="#/">Log Out</a></li> -->
+        <li><a ng-show="checkL()" href="#/login">Log out {{authUser.Name}}</a></li>
       </ul>
     </div>
   </div>

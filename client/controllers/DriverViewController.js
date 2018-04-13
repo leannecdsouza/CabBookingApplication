@@ -9,6 +9,19 @@ angular.module('myApp').controller('DriverViewController', function($scope, $coo
     });
   });
 
+  socket.on('MyBook', function(data) {
+    console.log(data.msg);
+    $scope.BookingDeets = data.msg;
+    console.log($scope.BookingDeets.Pickup);
+    document.getElementById('clickNewBooking').click();
+
+    document.getElementById("PickUpp").innerHTML = data.msg.Pickup;
+    document.getElementById("DropOfff").innerHTML = data.msg.Dropoff;
+    document.getElementById("CustName").innerHTML = data.msg.CustName;
+    document.getElementById("CustNumber").innerHTML = data.msg.CustNumber;
+    document.getElementById("Fare").innerHTML = data.msg.Fare;
+  });
+
 
   $scope.initMapD = function() {
     if (navigator.geolocation) {
@@ -59,19 +72,6 @@ angular.module('myApp').controller('DriverViewController', function($scope, $coo
     reconnect: false
   });
 
-  socket.on('MyBook', function(data) {
-    console.log(data.message);
-
-    // if (data.message.driverArray.length > 0) {
-    //
-    //   $scope.BookingDeets = data.message.BookNow;
-    //   console.log(data.message.BookNow);
-    //   console.log($scope.BookingDeets);
-    //   document.getElementById('clickNewBooking').click();
-    // } else {
-    //   console.log('No bookings');
-    // }
-  });
 
 
 });

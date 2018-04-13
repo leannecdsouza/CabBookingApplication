@@ -1,9 +1,9 @@
 angular.module('myApp').controller('LoginController', function($scope, $http, $location, $cookies, AuthenticationService) {
   $scope.LoginUser = function() {
-      sessionStorage.setItem('checkL', false);
-      sessionStorage.setItem('customerL', false);
-      sessionStorage.setItem('driverL', false);
-      sessionStorage.setItem('adminL', false);
+    sessionStorage.setItem('checkL', false);
+    sessionStorage.setItem('customerL', false);
+    sessionStorage.setItem('driverL', false);
+    sessionStorage.setItem('adminL', false);
     AuthenticationService.Login($scope.User, function(response) {
       if (response.data.isLoggedIn) {
         var role = response.data.userDetails.Role;
@@ -26,4 +26,9 @@ angular.module('myApp').controller('LoginController', function($scope, $http, $l
       }
     });
   }
+
+  function init(){
+    AuthenticationService.Logout();
+  }
+  init();
 });
