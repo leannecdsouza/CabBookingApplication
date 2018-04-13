@@ -31,11 +31,9 @@
   // Add new travel plan
   router.post('/addtravel', function(req, res) {
     var newTravel = new travel();
-    // newTravel.CustomerName = req.body.CustomerName;
-    // newTravel.CustomerMobile = req.body.CustomerMobile;
-    // newTravel.CustomerEmail = req.body.CustomerEmail;
+    newTravel.CustomerName = req.body.CustomerName;
+    newTravel.CustomerMobile = req.body.CustomerMobile;
     console.log("Reached here");
-    console.log(req.body.BookingType);
     newTravel.Booking = req.body.BookingType;
     newTravel.Cab = req.body.Cab;
     newTravel.StartPoint = req.body.Pickup;
@@ -49,7 +47,6 @@
         throw err;
         console.log("Error" + err);
       } else {
-        console.log("Else block");
         res.json({
           success: true,
           message: 'New Booking Saved'
