@@ -1,7 +1,6 @@
 angular.module('myApp').controller('BookingController', function($scope, $cookies, $http) {
   var socket = io();
-
-
+  var allMyMarkers = [];
 
   $scope.Booking = {
     Pickup: '',
@@ -112,9 +111,29 @@ angular.module('myApp').controller('BookingController', function($scope, $cookie
           map: map,
           icon: '/public/images/car-icon.png'
         });
+
+        allMyMarkers.push(Mymarker);
       } else {
         console.log('Error getting driver info');
       }
+
+      socket.on('DriverArr', function(data) {
+        console.log(data.description);
+        for (var i = 0; i <= data.description.Arr.length; i++) {
+          if (data.description.Arr[i] === data.description.driverId) {
+            console.log('Driver exists.');
+          } else {
+            $scope.DriverInfo = [];
+            $scope.DriverInfo = null;
+            for (var i = 0; i < allMyMarkers.length; i++) {
+              if (allMyMarkers[i].store_id === data.description.driverId) {
+                allMyMarkers[i].setMap(null);
+                break;
+              }
+            }
+          }
+        }
+      });
     });
 
   }
